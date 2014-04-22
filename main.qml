@@ -3,6 +3,7 @@ import QtQuick.Window 2.1
 import QtQuick.Layouts 1.1
 
 Window {
+    id: main
     visible: true
     width: 360
     height: 360
@@ -43,7 +44,7 @@ Window {
                     }
                     color: "#f3eaea"
                     opacity: 0.3
-                    font.pointSize: 30
+                    font.pointSize: Math.min(main.width, main.height) / 12
                     font.family: "Verdana"
                     Layout.fillWidth: true
                 }
@@ -51,21 +52,37 @@ Window {
                     text: board.score
                     color: "#f3eaea"
                     opacity: 0.3
-                    font.pointSize: 30
+                    font.pointSize: Math.min(main.width, main.height) / 12
                     font.family: "Verdana"
                 }
             }
-            Grid {
-                y: 10
-                anchors.horizontalCenter: parent.horizontalCenter
-                rows: 4
-                columns: 4
-                spacing: 10
+            Rectangle {
+                id: mainBoard
+                Layout.fillHeight: true
+                Layout.fillWidth: true
 
-                Repeater {
-                    model: board
-                    delegate: Tile {
-                        value: display
+                function step() {
+                    return Math.min(mainBoard.width, mainBoard.height) / 33;
+                }
+
+                width: 330
+                height: 330
+                color: "#baaa9e"
+
+                Grid {
+                    y: mainBoard.step()
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    rows: 4
+                    columns: 4
+                    spacing: mainBoard.step()
+
+                    Repeater {
+                        id: boardRepeater
+                        model: board
+                        delegate: Tile {
+                            value: display
+                            tileWidth: mainBoard.step() * 7
+                        }
                     }
                 }
             }
