@@ -88,4 +88,75 @@ Window {
             }
         }
     }
+
+    property int gesture_swipeLeft: 0;
+    property int gesture_swipeRight: 1;
+    property int gesture_swipeUp: 2;
+    property int gesture_swipeDown: 3;
+
+    function getGesture(startX, startY, endX, endY, areaWidth, areaHeight) {
+        var deltaX = endX - startX;
+        var right = deltaX > 0;
+        var moveX = Math.abs(deltaX);
+
+        var deltaY = endY - startY;
+        var down = deltaY > 0;
+        var moveY = Math.abs(deltaY);
+
+        var minimumFactor = 0.25;
+
+        var relativeHorizontal = moveX / areaWidth;
+        var relativeVertical = moveY / areaHeight;
+
+        if (relativeHorizontal < minimumFactor &&
+                relativeVertical < minimumFactor) {
+            return;
+        }
+
+        var horizontal = relativeHorizontal > relativeVertical;
+
+        if (horizontal) {
+            if (right) {
+                return gesture_swipeRight;
+            }
+            return gesture_swipeLeft;
+        }
+        if (down) {
+            return gesture_swipeDown;
+        }
+        return gesture_swipeUp;
+    }
+
+    MouseArea {
+        id: mouseArea
+        anchors.fill: parent
+
+        property int startX: 0
+        property int startY: 0
+
+        onPressed: {
+            startX = mouseX;
+            startY = mouseY;
+        }
+
+        onReleased: {
+            var gesture = getGesture(startX, startY,
+                                     mouseX, mouseY,
+                                     mouseArea.width, mouseArea.height);
+            switch(gesture) {
+            case gesture_swipeUp:
+                board.moveUp();
+                break;
+            case gesture_swipeRight:
+                board.moveRight();
+                break;
+            case gesture_swipeDown:
+                board.moveDown();
+                break;
+            case gesture_swipeLeft:
+                board.moveLeft();
+                break;
+            }
+        }
+    }
 }
