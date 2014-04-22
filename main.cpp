@@ -1,12 +1,24 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
+#include "board.h"
+
 int main(int argc, char *argv[])
 {
-    QGuiApplication app(argc, argv);
+    Q_UNUSED(argc)
+    Q_UNUSED(argv)
 
-    QQmlApplicationEngine engine;
-    engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
+    Board board;
 
-    return app.exec();
+    board.print();
+    board.moveUp();
+    board.print();
+    board.moveRight();
+    board.print();
+    board.moveUp();
+    board.print();
+    board.moveRight();
+    board.print();
+
+    return 0;
 }
