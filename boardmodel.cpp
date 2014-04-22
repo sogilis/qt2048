@@ -3,6 +3,7 @@
 BoardModel::BoardModel(QObject *parent) :
     QAbstractListModel(parent)
 {
+    connect(&board_, &Board::boardChangedAfterMovement, this, &BoardModel::onDataChanged);
 }
 
 int BoardModel::rowCount(const QModelIndex &parent) const {
@@ -23,4 +24,24 @@ QVariant BoardModel::data(const QModelIndex &index, int role) const {
         return str;
     }
     return QVariant();
+}
+
+void BoardModel::moveUp() {
+    board_.moveUp();
+}
+
+void BoardModel::moveRight() {
+    board_.moveRight();
+}
+
+void BoardModel::moveDown() {
+    board_.moveDown();
+}
+
+void BoardModel::moveLeft() {
+    board_.moveLeft();
+}
+
+void BoardModel::onDataChanged() {
+    emit dataChanged(createIndex(0, 0), createIndex(rowCount() - 1, 0));
 }

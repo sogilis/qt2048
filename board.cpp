@@ -44,6 +44,7 @@ bool Board::move(Directions direction) {
     }
     if (success) {
         addRandomTile();
+        emit boardChangedAfterMovement();
     }
 
     if(win() || gameEnded()) {

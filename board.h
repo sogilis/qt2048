@@ -29,6 +29,7 @@ public:
     bool win();
 
 signals:
+    void boardChangedAfterMovement();
 
 public slots:
 
