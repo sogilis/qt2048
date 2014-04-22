@@ -1,5 +1,6 @@
 import QtQuick 2.2
 import QtQuick.Window 2.1
+import QtQuick.Layouts 1.1
 
 Window {
     visible: true
@@ -27,17 +28,45 @@ Window {
           }
         }
 
-        Grid {
-            y: 10
-            anchors.horizontalCenter: parent.horizontalCenter
-            rows: 4
-            columns: 4
-            spacing: 10
+        ColumnLayout {
+            anchors.fill: parent
+            RowLayout {
+                Text {
+                    text: {
+                        if (board.win) {
+                            return "YOU WIN!"
+                        } else if (board.gameEnded) {
+                            return "GAME OVER";
+                        } else {
+                            return "";
+                        }
+                    }
+                    color: "#f3eaea"
+                    opacity: 0.3
+                    font.pointSize: 30
+                    font.family: "Verdana"
+                    Layout.fillWidth: true
+                }
+                Text {
+                    text: board.score
+                    color: "#f3eaea"
+                    opacity: 0.3
+                    font.pointSize: 30
+                    font.family: "Verdana"
+                }
+            }
+            Grid {
+                y: 10
+                anchors.horizontalCenter: parent.horizontalCenter
+                rows: 4
+                columns: 4
+                spacing: 10
 
-            Repeater {
-                model: board
-                delegate: Tile {
-                    value: display
+                Repeater {
+                    model: board
+                    delegate: Tile {
+                        value: display
+                    }
                 }
             }
         }

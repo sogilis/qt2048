@@ -7,6 +7,10 @@
 class BoardModel : public QAbstractListModel
 {
     Q_OBJECT
+    Q_PROPERTY(int score READ score NOTIFY scoreChanged)
+    Q_PROPERTY(bool gameEnded READ gameEnded NOTIFY gameStatusChanged)
+    Q_PROPERTY(bool win READ win NOTIFY gameStatusChanged)
+
 public:
     explicit BoardModel(QObject *parent = 0);
 
@@ -18,7 +22,14 @@ public:
     Q_INVOKABLE void moveDown();
     Q_INVOKABLE void moveLeft();
 
+    int score() const;
+    bool gameEnded();
+    bool win();
+
 signals:
+    void scoreChanged();
+    void gameStatusChanged();
+
 
 public slots:
     void onDataChanged();

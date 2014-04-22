@@ -4,6 +4,8 @@ BoardModel::BoardModel(QObject *parent) :
     QAbstractListModel(parent)
 {
     connect(&board_, &Board::boardChangedAfterMovement, this, &BoardModel::onDataChanged);
+    connect(&board_, &Board::scoreChanged, this, &BoardModel::scoreChanged);
+    connect(&board_, &Board::gameStatusChanged, this, &BoardModel::gameStatusChanged);
 }
 
 int BoardModel::rowCount(const QModelIndex &parent) const {
@@ -44,4 +46,16 @@ void BoardModel::moveLeft() {
 
 void BoardModel::onDataChanged() {
     emit dataChanged(createIndex(0, 0), createIndex(rowCount() - 1, 0));
+}
+
+int BoardModel::score() const {
+    return board_.score();
+}
+
+bool BoardModel::gameEnded() {
+    return board_.gameEnded();
+}
+
+bool BoardModel::win() {
+    return board_.win();
 }

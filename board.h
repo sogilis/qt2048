@@ -30,6 +30,8 @@ public:
 
 signals:
     void boardChangedAfterMovement();
+    void scoreChanged();
+    void gameStatusChanged();
 
 public slots:
 

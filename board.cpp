@@ -48,6 +48,7 @@ bool Board::move(Directions direction) {
     }
 
     if(win() || gameEnded()) {
+        emit gameStatusChanged();
         return false;
     }
 
@@ -151,6 +152,7 @@ bool Board::slide(t_value array[kSize]) {
                     stop = target + 1; // don't cascade merges
                     mergeValue = array[target] + array[pos];
                     score_ += mergeValue;
+                    emit scoreChanged();
                     higherTile_ = max(higherTile_, mergeValue);
                 }
                 array[target] += array[pos]; // merge or move (target is 0)
