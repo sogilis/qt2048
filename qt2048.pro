@@ -5,7 +5,8 @@ CONFIG+=c++11
 QT += qml quick
 
 SOURCES += main.cpp \
-    board.cpp
+    board.cpp \
+    boardmodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -16,4 +17,5 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 HEADERS += \
-    board.h
+    board.h \
+    boardmodel.h

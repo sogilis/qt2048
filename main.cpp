@@ -1,24 +1,17 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QtQml>
 
-#include "board.h"
+#include "boardmodel.h"
 
 int main(int argc, char *argv[])
 {
-    Q_UNUSED(argc)
-    Q_UNUSED(argv)
+    QGuiApplication app(argc, argv);
 
-    Board board;
+    QQmlApplicationEngine engine;
+    BoardModel board;
+    engine.rootContext()->setContextProperty("board", &board);
+    engine.load(QUrl(QStringLiteral("qrc:///main.qml")));
 
-    board.print();
-    board.moveUp();
-    board.print();
-    board.moveRight();
-    board.print();
-    board.moveUp();
-    board.print();
-    board.moveRight();
-    board.print();
-
-    return 0;
+    return app.exec();
 }

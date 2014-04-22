@@ -6,15 +6,19 @@ Window {
     width: 360
     height: 360
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            Qt.quit();
-        }
-    }
+    color: "#baaa9e"
+    Grid {
+        y: 10
+        anchors.horizontalCenter: parent.horizontalCenter
+        rows: 4
+        columns: 4
+        spacing: 10
 
-    Text {
-        text: qsTr("Hello World")
-        anchors.centerIn: parent
+        Repeater {
+            model: board
+            delegate: Tile {
+                value: display
+            }
+        }
     }
 }
